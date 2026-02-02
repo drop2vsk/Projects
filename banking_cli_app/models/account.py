@@ -33,9 +33,20 @@ class Account():
 
     def withdraw(self,amount):
         """
-        Docstring for withdraw
+        Debit the given amount from the account
         
-        :param self: Description
-        :param amount: Amount needs to enter
+        Rules:
+        - Amount must be greater than zero
+        - Amount must be less than account balance
+        - Creates a DR transaction with timestamp
+        - Updates account balance and last activity time
         """
-        pass
+        if amount <= 0:
+            raise ValueError ("Amount should be greater than zero")
+        elif amount > self.balance:
+            raise ValueError ("Insufficient Balance")      
+        self.balance -= amount
+        self.last_activity = datetime.now()
+        transaction = Transaction(txn_type="DR",amount=amount,balance_after=self.balance)
+        self.transactions.append(transaction)
+        return transaction
