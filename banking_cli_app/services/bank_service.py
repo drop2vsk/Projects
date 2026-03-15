@@ -1,8 +1,25 @@
 from models.user import User
 from models.account import Account
 class Bankservice():
-    def __init__(self):
+    def __init__(self): 
+        """ Dictionary storing all accounts in the bank
+         Key   -> account_number (str/int)
+         Value -> Account object
+         Example:
+         {
+           1001: <Account object>,
+           1002: <Account object>
+         }"""
         self.accounts = {}
+        """Dictionary storing all registered users
+         Key   -> user_name (str)
+         Value -> User object
+         Example:
+         {
+           "suresh": <User object>,
+           "ravi": <User object>
+         }
+        """
         self.users = {}
         self.current_user = None
 
@@ -58,3 +75,13 @@ class Bankservice():
     def get_account(self,account_number):
         account = self._get_validated_account(account_number)
         return account
+    
+    def get_transactions(self,account_number):
+        account = self._get_validated_account(account_number)
+        transactions = account.transactions
+        return transactions
+    
+    def get_user_account(self):
+        if self.current_user is None:
+            raise ValueError("User must logged in")
+        return self.current_user.accounts
