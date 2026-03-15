@@ -6,7 +6,7 @@ class Bankservice():
         self.users = {}
         self.current_user = None
 
-    def _get_validation_account(self,account_number):
+    def _get_validated_account(self,account_number):
         if self.current_user is None:
             raise ValueError("User must logged in")
         if account_number not in self.accounts:
@@ -43,14 +43,18 @@ class Bankservice():
         return account
 
     def deposit(self,account_number,amount):
-        account = self._get_validation_account(account_number)
+        account = self._get_validated_account(account_number)
         return account.deposit(amount)
     
     def withdraw(self,account_number,amount):
-        account = self._get_validation_account(account_number)
+        account = self._get_validated_account(account_number)
         return account.withdraw(amount)
 
     def user_logout(self):
-        pass
+        if self.current_user is None:
+            raise ValueError("No user is currently logged in")
+        self.current_user = None
+
     def get_account(self,account_number):
-        pass
+        account = self._get_validated_account(account_number)
+        return account
