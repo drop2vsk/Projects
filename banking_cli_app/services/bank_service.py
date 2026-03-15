@@ -2,6 +2,7 @@ from models.user import User
 from models.account import Account
 class Bankservice():
     def __init__(self): 
+        self.accounts = {}
         """ Dictionary storing all accounts in the bank
          Key   -> account_number (str/int)
          Value -> Account object
@@ -10,7 +11,7 @@ class Bankservice():
            1001: <Account object>,
            1002: <Account object>
          }"""
-        self.accounts = {}
+        self.users = {}
         """Dictionary storing all registered users
          Key   -> user_name (str)
          Value -> User object
@@ -20,7 +21,6 @@ class Bankservice():
            "ravi": <User object>
          }
         """
-        self.users = {}
         self.current_user = None
 
     def _get_validated_account(self,account_number):
